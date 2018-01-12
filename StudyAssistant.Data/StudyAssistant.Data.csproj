@@ -84,11 +84,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventBlock.edmx</DependentUpon>
     </Compile>
-    <Compile Include="EventBlock1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventBlock.tt</DependentUpon>
-    </Compile>
     <Compile Include="IdentityModels.cs" />
     <Compile Include="IdentityRole.cs">
       <DependentUpon>EventBlock.tt</DependentUpon>

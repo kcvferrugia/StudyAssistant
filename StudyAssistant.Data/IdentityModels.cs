@@ -16,7 +16,21 @@ namespace StudyAssistant.Data
             // Add custom user claims here
             return userIdentity;
         }
+
+
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+            // Add custom user claims here
+            return userIdentity;
+        }
     }
+
+
+
+
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -29,5 +43,38 @@ namespace StudyAssistant.Data
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Event> EventBlocks { get; set; }
     }
+
+    
+
+    //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+    //    modelBuilder
+    //        .Configurations
+    //        .Add(new IdentityUserLoginConfiguration())
+    //        .Add(new IdentityUserRoleConfiguration());
+    //}
+
+
+    //public class IdentityUserLoginConfiguration : EntityTypeConfiguration<IdentityUserLogin>
+    //{
+    //    public IdentityUserLoginConfiguration()
+    //    {
+    //        HasKey(iul => iul.UserId);
+    //    }
+    //}
+
+    //public class IdentityUserRoleConfiguration : EntityTypeConfiguration<IdentityUserRole>
+    //{
+    //    public IdentityUserRoleConfiguration()
+    //    {
+    //        HasKey(iur => iur.RoleId);
+    //    }
+
+    //}
+
 }

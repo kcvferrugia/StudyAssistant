@@ -10,9 +10,9 @@ namespace StudentAssistant.Contracts
     public interface IEvent
     {
         bool CreateEvent(EventBlockCreate model);
-        bool UpdateEvent(EventBlockEdit model);
+        bool EditEvent(EventBlockEdit model);
         bool DeleteEvent(int id);
         EventBlockDetail GetEventById(int eventId);
-        IEnumerable<EventBlockListItem> Events { get; }
+        IEnumerable<EventBlockListItem> GetEvent();
     }
 }

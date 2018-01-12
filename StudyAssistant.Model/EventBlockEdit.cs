@@ -7,7 +7,7 @@ namespace StudyAssistant.Model
 {
     public class EventBlockEdit
     {
-        [Required]
+        [Key]
         public int EventId { get; set; }
 
         [Required]
