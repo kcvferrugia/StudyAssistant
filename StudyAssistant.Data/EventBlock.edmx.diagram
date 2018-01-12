@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d4e5bff4a54840398f2a269c6c9bbb44" Name="Diagram1">
+        <EntityTypeShape EntityType="StudyTimeHelperModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.Event" Width="1.5" PointX="5.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.IdentityRole" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.IdentityUserClaim" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.IdentityUserLogin" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.IdentityUserRole" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudyTimeHelperModel.StudyTimeHelperUser" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="StudyTimeHelperModel.FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="StudyTimeHelperModel.FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="StudyTimeHelperModel.FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="StudyTimeHelperModel.FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

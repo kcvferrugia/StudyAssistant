@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StudyTimeHelperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="End" Type="datetime" />
+          <Property Name="EventRepeat" Type="bit" />
+          <Property Name="IsAllDay" Type="bit" />
+          <Property Name="ThemeColor" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar(max)" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="StudyTimeHelperUser_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar(max)" />
+          <Property Name="ProviderKey" Type="nvarchar(max)" />
+          <Property Name="StudyTimeHelperUser_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="IdentityUserRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar(max)" />
+          <Property Name="IdentityRole_Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="StudyTimeHelperUser_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="StudyTimeHelperUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserClaim" Type="Self.IdentityUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserClaim">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserLogin" Type="Self.IdentityUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserLogin">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id">
+          <End Role="IdentityRole" Type="Self.IdentityRole" Multiplicity="0..1" />
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="IdentityRole_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudyTimeHelperModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityRole" EntityType="Self.IdentityRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserClaim" EntityType="Self.IdentityUserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserLogin" EntityType="Self.IdentityUserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserRole" EntityType="Self.IdentityUserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudyTimeHelperUser" EntityType="Self.StudyTimeHelperUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserClaim" EntitySet="IdentityUserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserLogin" EntitySet="IdentityUserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id" Association="Self.FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id">
+            <End Role="IdentityRole" EntitySet="IdentityRole" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudyTimeHelperModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Start" Type="DateTime" Precision="3" />
+          <Property Name="End" Type="DateTime" Precision="3" />
+          <Property Name="EventRepeat" Type="Boolean" />
+          <Property Name="IsAllDay" Type="Boolean" />
+          <Property Name="ThemeColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentityUserRole" Relationship="Self.FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id" FromRole="IdentityRole" ToRole="IdentityUserRole" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudyTimeHelperUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudyTimeHelperUser" Relationship="Self.FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="IdentityUserClaim" ToRole="StudyTimeHelperUser" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginProvider" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudyTimeHelperUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudyTimeHelperUser" Relationship="Self.FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="IdentityUserLogin" ToRole="StudyTimeHelperUser" />
+        </EntityType>
+        <EntityType Name="IdentityUserRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdentityRole_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StudyTimeHelperUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentityRole" Relationship="Self.FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id" FromRole="IdentityUserRole" ToRole="IdentityRole" />
+          <NavigationProperty Name="StudyTimeHelperUser" Relationship="Self.FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="IdentityUserRole" ToRole="StudyTimeHelperUser" />
+        </EntityType>
+        <EntityType Name="StudyTimeHelperUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentityUserClaim" Relationship="Self.FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="StudyTimeHelperUser" ToRole="IdentityUserClaim" />
+          <NavigationProperty Name="IdentityUserLogin" Relationship="Self.FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="StudyTimeHelperUser" ToRole="IdentityUserLogin" />
+          <NavigationProperty Name="IdentityUserRole" Relationship="Self.FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" FromRole="StudyTimeHelperUser" ToRole="IdentityUserRole" />
+        </EntityType>
+        <Association Name="FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id">
+          <End Role="IdentityRole" Type="Self.IdentityRole" Multiplicity="0..1" />
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="IdentityRole_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserClaim" Type="Self.IdentityUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserClaim">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserLogin" Type="Self.IdentityUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserLogin">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+          <End Role="StudyTimeHelperUser" Type="Self.StudyTimeHelperUser" Multiplicity="0..1" />
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyTimeHelperUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="StudyTimeHelperUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudyTimeHelperEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Event" EntityType="Self.Event" />
+          <EntitySet Name="IdentityRole" EntityType="Self.IdentityRole" />
+          <EntitySet Name="IdentityUserClaim" EntityType="Self.IdentityUserClaim" />
+          <EntitySet Name="IdentityUserLogin" EntityType="Self.IdentityUserLogin" />
+          <EntitySet Name="IdentityUserRole" EntityType="Self.IdentityUserRole" />
+          <EntitySet Name="StudyTimeHelperUser" EntityType="Self.StudyTimeHelperUser" />
+          <AssociationSet Name="FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id" Association="Self.FK_dbo_IdentityUserRole_dbo_IdentityRole_IdentityRole_Id">
+            <End Role="IdentityRole" EntitySet="IdentityRole" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserClaim_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserClaim" EntitySet="IdentityUserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserLogin_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserLogin" EntitySet="IdentityUserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id" Association="Self.FK_dbo_IdentityUserRole_dbo_StudyTimeHelperUser_StudyTimeHelperUser_Id">
+            <End Role="StudyTimeHelperUser" EntitySet="StudyTimeHelperUser" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudyTimeHelperModelStoreContainer" CdmEntityContainer="StudyTimeHelperEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="EventRepeat" ColumnName="EventRepeat" />
+                <ScalarProperty Name="IsAllDay" ColumnName="IsAllDay" />
+                <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityRole">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.IdentityRole">
+              <MappingFragment StoreEntitySet="IdentityRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserClaim">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.IdentityUserClaim">
+              <MappingFragment StoreEntitySet="IdentityUserClaim">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="StudyTimeHelperUser_Id" ColumnName="StudyTimeHelperUser_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserLogin">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.IdentityUserLogin">
+              <MappingFragment StoreEntitySet="IdentityUserLogin">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="StudyTimeHelperUser_Id" ColumnName="StudyTimeHelperUser_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserRole">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.IdentityUserRole">
+              <MappingFragment StoreEntitySet="IdentityUserRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IdentityRole_Id" ColumnName="IdentityRole_Id" />
+                <ScalarProperty Name="StudyTimeHelperUser_Id" ColumnName="StudyTimeHelperUser_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyTimeHelperUser">
+            <EntityTypeMapping TypeName="StudyTimeHelperModel.StudyTimeHelperUser">
+              <MappingFragment StoreEntitySet="StudyTimeHelperUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
